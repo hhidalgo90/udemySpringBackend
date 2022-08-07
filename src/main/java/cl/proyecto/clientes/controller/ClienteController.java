@@ -4,6 +4,8 @@ import cl.proyecto.clientes.model.entity.Cliente;
 import cl.proyecto.clientes.service.IClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -16,17 +18,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = {"http://localhost:4200"})
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:65163"})
 @RestController
 @RequestMapping("/apiCliente")
 public class ClienteController {
 
     @Autowired
     private IClienteService iClienteService;
+    private static final Integer SIZE_PAGES = 4;
 
     @GetMapping("/clientes")
     public List<Cliente> findAll(){
         return iClienteService.findAll();
+    }
+
+    @GetMapping("/clientes/page/{nroPagina}") //Implementacion para usar paginacion desde el backend
+    public Page<Cliente> findAll(@PathVariable Integer nroPagina){
+        return iClienteService.findAll(PageRequest.of(nroPagina, SIZE_PAGES));
     }
 
     //ResponseEntity<?> permite enviar mensaje de error desde el servidor
