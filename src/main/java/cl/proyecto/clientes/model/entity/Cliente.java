@@ -8,6 +8,7 @@ import lombok.experimental.Accessors;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
@@ -30,9 +31,10 @@ public class Cliente implements Serializable {
 
     @NotEmpty(message = " no puede estar vacio")
     @Email(message = " debe tener un formato valido")
-    @Column(nullable = false, unique = true)// no puede ser null y debe ser unico
+    @Column(nullable = false, unique = false)// no puede ser null y debe ser unico
     private String email;
 
+    @NotNull(message = " no puede estar vacio")
     @Column(name = "create_at")
     @Temporal(TemporalType.DATE)
     private Date createAt;
@@ -40,10 +42,10 @@ public class Cliente implements Serializable {
     /**
      * Este metodo se ejecuta justo antes de persistir en bd, es parte del ciclo de vida de las entidades @Entity
      */
-    @PrePersist
+   /* @PrePersist
     public void prePersist(){
         createAt = new Date();
-    }
+    }*/
 
     public Long getId() {
         return id;
