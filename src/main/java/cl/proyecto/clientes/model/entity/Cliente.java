@@ -39,6 +39,8 @@ public class Cliente implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date createAt;
 
+    private String foto;
+
     /**
      * Este metodo se ejecuta justo antes de persistir en bd, es parte del ciclo de vida de las entidades @Entity
      */
@@ -85,5 +87,13 @@ public class Cliente implements Serializable {
 
     public void setCreateAt(Date createAt) {
         this.createAt = createAt;
+    }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
     }
 }
