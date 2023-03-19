@@ -1,6 +1,7 @@
 package cl.proyecto.clientes.controller;
 
 import cl.proyecto.clientes.model.entity.Cliente;
+import cl.proyecto.clientes.model.entity.Region;
 import cl.proyecto.clientes.service.IClienteService;
 import cl.proyecto.clientes.service.IUploadFileService;
 import lombok.extern.slf4j.Slf4j;
@@ -123,6 +124,7 @@ public class ClienteController {
         clienteActual.setNombre(cliente.getNombre());
         clienteActual.setApellido(cliente.getApellido());
         clienteActual.setEmail(cliente.getEmail());
+        clienteActual.setRegion(cliente.getRegion());
 
         clienteActualizado = iClienteService.save(clienteActual);
 
@@ -201,6 +203,11 @@ public class ClienteController {
         cabecera.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + recurso.getFilename() + "\"");
 
         return new ResponseEntity<Resource>(recurso, cabecera, HttpStatus.OK);
+    }
+
+    @GetMapping("/clientes/regiones")
+    public List<Region> listarRegiones(){
+        return iClienteService.findAllRegiones();
     }
 
 

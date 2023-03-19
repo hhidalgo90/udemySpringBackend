@@ -1,6 +1,7 @@
 package cl.proyecto.clientes.service;
 
 import cl.proyecto.clientes.model.entity.Cliente;
+import cl.proyecto.clientes.model.entity.Region;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -20,4 +21,6 @@ public interface IClienteService {
     void delete(Long id);
 
     void edit(Cliente cliente);
+
+    public List<Region> findAllRegiones();
 }

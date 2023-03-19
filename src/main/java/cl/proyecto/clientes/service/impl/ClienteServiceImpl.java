@@ -2,6 +2,7 @@ package cl.proyecto.clientes.service.impl;
 
 import cl.proyecto.clientes.model.dao.IClienteDao;
 import cl.proyecto.clientes.model.entity.Cliente;
+import cl.proyecto.clientes.model.entity.Region;
 import cl.proyecto.clientes.service.IClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -49,5 +50,11 @@ public class ClienteServiceImpl implements IClienteService {
     @Override
     public void edit(Cliente cliente) {
         iClienteDao.save(cliente);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Region> findAllRegiones() {
+        return iClienteDao.findAllRegiones();
     }
 }

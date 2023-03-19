@@ -1,5 +1,6 @@
 package cl.proyecto.clientes.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -40,6 +41,12 @@ public class Cliente implements Serializable {
     private Date createAt;
 
     private String foto;
+
+    @NotNull(message = "Region no puede estar vacio")
+    @ManyToOne(fetch = FetchType.LAZY) //muchos clientes tienen una region, Lazy: se cargan datos cuando se llama al atributo
+    @JoinColumn(name = "region_id") // le indicamos el nombre del campo que queremos en bd
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})//ignora propiedades propias de hibernate que se trae por defecto al usar FetchType.LAZY
+    private Region region;
 
     /**
      * Este metodo se ejecuta justo antes de persistir en bd, es parte del ciclo de vida de las entidades @Entity
@@ -95,5 +102,13 @@ public class Cliente implements Serializable {
 
     public void setFoto(String foto) {
         this.foto = foto;
+    }
+
+    public Region getRegion() {
+        return region;
+    }
+
+    public void setRegion(Region region) {
+        this.region = region;
     }
 }
