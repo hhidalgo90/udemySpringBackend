@@ -103,10 +103,9 @@ public class ClienteController {
     public ResponseEntity<?> update(@Valid @RequestBody Cliente cliente, @PathVariable Long id, BindingResult result){
 
         Map<String, Object> respuesta = new HashMap<>();
-
         if(result.hasErrors()){
             List errores = result.getFieldErrors().stream()
-                    .map(err -> "El campo '" + err.getField() + "' " + err.getDefaultMessage())
+                    .map(err -> "El campo '" + err.getField() + "' ," + err.getDefaultMessage())
                     .collect(Collectors.toList());
 
             respuesta.put("errores" , errores);
