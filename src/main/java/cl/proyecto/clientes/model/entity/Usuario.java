@@ -15,12 +15,19 @@ public class Usuario implements Serializable { //Serializable permite convertir 
     private Long id;
 
     @Column(unique = true, length = 20)
-    private String userName;
+    private String username;
 
     @Column(length = 60)
     private String password;
 
     private Boolean enabled;
+
+    private String nombre;
+
+    private String apellido;
+
+    @Column(unique = true)
+    private String email;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) //CascadeType.ALL al eliminar la tabla se borran todas sus dependencias, para evitar problemas de fk
     @JoinTable(name = "usuarios_roles", joinColumns = @JoinColumn(name = "usuario_id"),
@@ -37,12 +44,12 @@ public class Usuario implements Serializable { //Serializable permite convertir 
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -67,5 +74,29 @@ public class Usuario implements Serializable { //Serializable permite convertir 
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

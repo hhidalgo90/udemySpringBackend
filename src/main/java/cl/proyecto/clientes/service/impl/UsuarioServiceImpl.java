@@ -2,6 +2,7 @@ package cl.proyecto.clientes.service.impl;
 
 import cl.proyecto.clientes.model.dao.IUsuarioDAO;
 import cl.proyecto.clientes.model.entity.Usuario;
+import cl.proyecto.clientes.service.IUsuarioService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class UsuarioServiceImpl implements UserDetailsService {// UserDetailsService interfaz que se usa de spring security para el logueo de usuarios
+public class UsuarioServiceImpl implements IUsuarioService, UserDetailsService {// UserDetailsService interfaz que se usa de spring security para el logueo de usuarios
 
     private Logger logger = LoggerFactory.getLogger(UsuarioServiceImpl.class);
 
@@ -28,7 +29,7 @@ public class UsuarioServiceImpl implements UserDetailsService {// UserDetailsSer
     @Override
     @Transactional(readOnly = true)//es una consulta asi que debe ser readonly
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Usuario usuario = usuarioDAO.findByUserName(username);
+        Usuario usuario = usuarioDAO.findByUsername(username);
         if (usuario == null){
             logger.error("Error en el login: no existe usuario: " + username + " en el sistema.");
             throw new UsernameNotFoundException("Error en el login: no existe usuario: " + username + " en el sistema.");
@@ -38,6 +39,12 @@ public class UsuarioServiceImpl implements UserDetailsService {// UserDetailsSer
                 .peek(simpleGrantedAuthority -> logger.info(simpleGrantedAuthority.getAuthority()))//sirve para mostrar por consola
                 .collect(Collectors.toList());//convertimos la clase Role a GrantedAuthority
 
-        return new User(usuario.getUserName(), usuario.getPassword(), usuario.getEnabled(), true, true, true, authorities);
+        return new User(usuario.getUsername(), usuario.getPassword(), usuario.getEnabled(), true, true, true, authorities);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Usuario findByUsername(String username) {
+        return usuarioDAO.findByUsername(username);
     }
 }

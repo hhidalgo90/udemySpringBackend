@@ -1,3 +1,4 @@
+
 INSERT INTO regiones(id, nombre) VALUES (1, 'Arica');
 INSERT INTO regiones(id, nombre) VALUES (2, 'Iquique');
 INSERT INTO regiones(id, nombre) VALUES (3, 'Antofagasta');
@@ -81,3 +82,14 @@ INSERT INTO cliente(region_id, apellido, create_at, email, nombre) VALUES (1, 'H
 INSERT INTO cliente(region_id, apellido, create_at, email, nombre) VALUES (1, 'Carloza', '2011-07-13', 'kata@gmail.com',' Katalina');
 INSERT INTO cliente(region_id, apellido, create_at, email, nombre) VALUES (1, 'Silva', '2015-07-19', 'emy@gmail.com',' Emilia');
 INSERT INTO cliente(region_id, apellido, create_at, email, nombre) VALUES (1, 'HidalgoEspinoza', '2021-01-27', 'suky@gmail.com',' Suky Andrea');
+
+
+INSERT INTO usuarios (username, password, enabled, nombre, apellido, email) VALUES ('andres','$2a$10$/40Ib5w.kwK9.biUbN/tzuB0TiW/gMWjUZ1XU5ckc8gLcBAgFvJMW', 1, 'Hector', 'Hidalgo', 'hhhhh@hotmail.es');
+INSERT INTO usuarios (username, password, enabled, nombre, apellido, email) VALUES ('admin','$2a$10$7pEACU3DsIggRYJVBp8SxOIakps4uhHTnqwumEBAfOkVl7PfNljuq', 1, 'Andres', 'Espinoza', 'zzzzzz@hotmail.es');
+
+INSERT INTO roles (nombre) VALUES ('ROLE_USER');
+INSERT INTO roles (nombre) VALUES ('ROLE_ADMIN');
+
+INSERT INTO usuarios_roles (usuario_id, role_id) VALUES (1, 1);
+INSERT INTO usuarios_roles (usuario_id, role_id) VALUES (2, 2);
+INSERT INTO usuarios_roles (usuario_id, role_id) VALUES (2, 1);

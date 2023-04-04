@@ -15,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -51,6 +52,7 @@ public class ClienteController {
     }
 
     //ResponseEntity<?> permite enviar mensaje de error desde el servidor
+    @Secured({"ROLE_USER", "ROLE_ADMIN"})
     @GetMapping("/clientes/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id){
         Map<String, Object> respuesta = new HashMap<>();
@@ -72,6 +74,7 @@ public class ClienteController {
         }
     }
 
+    @Secured("ROLE_ADMIN")
     @PostMapping("/clientes")
     public  ResponseEntity<?> create(@Valid @RequestBody Cliente cliente, BindingResult result){
         //con la etiqueta @Valid se intercepta el objeto para validarlo, se configuro previamente en el objeto Cliente
@@ -99,6 +102,7 @@ public class ClienteController {
         return new ResponseEntity<Map<String, Object>>(respuesta, HttpStatus.CREATED);  //Responde 201, objeto creado
     }
 
+    @Secured("ROLE_ADMIN")
     @PutMapping("/clientes/{id}")
     public ResponseEntity<?> update(@Valid @RequestBody Cliente cliente, @PathVariable Long id, BindingResult result){
 
@@ -137,6 +141,7 @@ public class ClienteController {
         return new ResponseEntity<Map<String, Object>>(respuesta, HttpStatus.CREATED);  //Responde 201, objeto creado
     }
 
+    @Secured("ROLE_ADMIN")
     @DeleteMapping("/clientes/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT) //Responde 204, sin contenido
     public ResponseEntity<?> delete(@PathVariable Long id){
@@ -157,6 +162,7 @@ public class ClienteController {
         return new ResponseEntity<Map<String, Object>>(respuesta, HttpStatus.OK);
     }
 
+    @Secured({"ROLE_USER", "ROLE_ADMIN"})
     @PostMapping("/clientes/upload")
     public ResponseEntity<?> upload(@RequestParam("imagenUsuario") MultipartFile imagen, @RequestParam("id") Long id){
         Map<String, Object> respuesta = new HashMap<>();
@@ -204,6 +210,7 @@ public class ClienteController {
         return new ResponseEntity<Resource>(recurso, cabecera, HttpStatus.OK);
     }
 
+    @Secured("ROLE_ADMIN")
     @GetMapping("/clientes/regiones")
     public List<Region> listarRegiones(){
         return iClienteService.findAllRegiones();
