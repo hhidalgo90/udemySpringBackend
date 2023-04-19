@@ -104,7 +104,7 @@ public class ClienteController {
 
     @Secured("ROLE_ADMIN")
     @PutMapping("/clientes/{id}")
-    public ResponseEntity<?> update(@Valid @RequestBody Cliente cliente, @PathVariable Long id, BindingResult result){
+    public ResponseEntity<?> update(@Valid @RequestBody Cliente cliente, BindingResult result, @PathVariable Long id){
 
         Map<String, Object> respuesta = new HashMap<>();
         if(result.hasErrors()){
