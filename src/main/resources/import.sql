@@ -93,3 +93,23 @@ INSERT INTO roles (nombre) VALUES ('ROLE_ADMIN');
 INSERT INTO usuarios_roles (usuario_id, role_id) VALUES (1, 1);
 INSERT INTO usuarios_roles (usuario_id, role_id) VALUES (2, 2);
 INSERT INTO usuarios_roles (usuario_id, role_id) VALUES (2, 1);
+
+/* Populate tabla productos */
+INSERT INTO productos (nombre, precio, create_at) VALUES ('Cama nube L azul', 59990, NOW());
+INSERT INTO productos (nombre, precio, create_at) VALUES ('Cama nube L beige', 59990, NOW());
+INSERT INTO productos (nombre, precio, create_at) VALUES ('Cama nube XL azul', 64990, NOW());
+INSERT INTO productos (nombre, precio, create_at) VALUES ('Cama nube XL gris', 64990, NOW());
+
+/* Populate tabla facturas */
+/* Factura 1 */
+INSERT INTO facturas (descripcion, observacion, cliente_id, create_at) VALUES ('Factura Entregamor', null, 1, NOW());
+
+INSERT INTO facturas_items (cantidad, factura_id, producto_id) VALUES (1, 1, 1);
+INSERT INTO facturas_items (cantidad, factura_id, producto_id) VALUES (2, 1, 3);
+INSERT INTO facturas_items (cantidad, factura_id, producto_id) VALUES (2, 1, 2);
+INSERT INTO facturas_items (cantidad, factura_id, producto_id) VALUES (1, 1, 4);
+
+/* Factura 2 */
+INSERT INTO facturas (descripcion, observacion, cliente_id, create_at) VALUES ('Factura 2 camas', 'Observacion de prueba', 1, NOW());
+
+INSERT INTO facturas_items (cantidad, factura_id, producto_id) VALUES (3, 2, 4);

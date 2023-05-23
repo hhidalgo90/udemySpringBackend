@@ -1,10 +1,6 @@
 package cl.proyecto.clientes.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -12,11 +8,14 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "cliente")
 public class Cliente implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,12 +48,16 @@ public class Cliente implements Serializable {
     private Region region;
 
     /**
-     * Este metodo se ejecuta justo antes de persistir en bd, es parte del ciclo de vida de las entidades @Entity
+     * mappedBy: atributo cliente en clase Factura
+     * CascadeType.ALL: al eliminar un cliente elimina a todos sus elementos hijos(facturas) evitando problemas de fk
      */
-   /* @PrePersist
-    public void prePersist(){
-        createAt = new Date();
-    }*/
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "cliente", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties(value = {"cliente", "hibernateLazyInitializer", "handler"}, allowSetters = true)
+    private List<Factura> facturas;
+
+    public Cliente() {
+        this.facturas = new ArrayList<>();
+    }
 
     public Long getId() {
         return id;
@@ -110,5 +113,13 @@ public class Cliente implements Serializable {
 
     public void setRegion(Region region) {
         this.region = region;
+    }
+
+    public List<Factura> getFacturas() {
+        return facturas;
+    }
+
+    public void setFacturas(List<Factura> facturas) {
+        this.facturas = facturas;
     }
 }

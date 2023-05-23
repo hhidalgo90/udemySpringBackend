@@ -1,9 +1,12 @@
 package cl.proyecto.clientes.service.impl;
 
 import cl.proyecto.clientes.model.dao.IClienteDao;
+import cl.proyecto.clientes.model.dao.IProductoDao;
 import cl.proyecto.clientes.model.entity.Cliente;
+import cl.proyecto.clientes.model.entity.Producto;
 import cl.proyecto.clientes.model.entity.Region;
 import cl.proyecto.clientes.service.IClienteService;
+import cl.proyecto.clientes.service.IProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,10 +18,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ClienteServiceImpl implements IClienteService {
+public class ClienteServiceImpl implements IClienteService , IProductoService {
 
     @Autowired
     private IClienteDao iClienteDao;
+
+    @Autowired
+    private IProductoDao productoDao;
 
     @Override
     @Transactional(readOnly = true)
@@ -56,5 +62,17 @@ public class ClienteServiceImpl implements IClienteService {
     @Transactional(readOnly = true)
     public List<Region> findAllRegiones() {
         return iClienteDao.findAllRegiones();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Producto> findByNombre(String termino) {
+        return productoDao.findByNombreContainingIgnoreCase(termino);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Producto> findAlllProductos() {
+        return (List<Producto>) productoDao.findAll();
     }
 }
