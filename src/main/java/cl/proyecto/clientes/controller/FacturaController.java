@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:65163"})
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:8089", "https://angular-clientes-udemy.web.app"})
 @RestController
 @Slf4j
 @RequestMapping("/apiCliente")
